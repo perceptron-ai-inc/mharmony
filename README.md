@@ -1,12 +1,31 @@
 <!-- Modified by Perceptron AI, Inc.; derived from OpenAI Harmony. -->
 
-<div align="center">
-  <img alt="Harmony" src="https://raw.githubusercontent.com/perceptron-ai-inc/mharmony/main/docs/header.png">
-  <h1>mHarmony</h1>
-  <p>Harmony rendering, parsing, tokenization, pointing, and generic media envelopes.</p>
-</div>
+<p align="center">
+  <a href="https://perceptron.inc/">
+    <img alt="Perceptron AI" src="docs/perceptron-logo.png" width="144">
+  </a>
+</p>
 
-mHarmony is a standalone Rust crate and Python package for constructing and
+<h1 align="center">mharmony</h1>
+
+<p align="center">
+  <strong>Portable Harmony rendering, parsing, tokenization, pointing, and media envelopes.</strong>
+  <br>
+  A Rust core with a typed Python API, maintained by
+  <a href="https://perceptron.inc/">Perceptron AI</a>.
+</p>
+
+<p align="center">
+  <a href="https://github.com/perceptron-ai-inc/mharmony/blob/main/docs/python.md">Python guide</a>
+  ·
+  <a href="https://github.com/perceptron-ai-inc/mharmony/blob/main/docs/rust.md">Rust guide</a>
+  ·
+  <a href="https://github.com/perceptron-ai-inc/mharmony/blob/main/docs/format.md">Format</a>
+  ·
+  <a href="https://github.com/perceptron-ai-inc/mharmony/blob/main/docs/compatibility.md">Compatibility</a>
+</p>
+
+mharmony is a standalone Rust crate and Python package for constructing and
 parsing the [Harmony response format](https://github.com/perceptron-ai-inc/mharmony/blob/main/docs/format.md). It is based on
 [OpenAI Harmony](https://github.com/openai/harmony) and extends that
 Apache-2.0 implementation with multimodal envelopes, pointing markup,
@@ -41,21 +60,26 @@ kind names can be registered at encoding load time without changing the core.
 
 ## Install
 
+Registry publication is intentionally deferred. Until the first registry
+release, install the public `0.1.0` implementation from its audited Git
+commit.
+
 Python:
 
 ```bash
-pip install mharmony==0.1.0
+pip install "mharmony @ git+https://github.com/perceptron-ai-inc/mharmony.git@9a57efbf8ada2d73641fc40081f4e4fa6ff2ab92"
 ```
 
 Rust:
 
 ```toml
 [dependencies]
-mharmony = "0.1"
+mharmony = { git = "https://github.com/perceptron-ai-inc/mharmony.git", rev = "9a57efbf8ada2d73641fc40081f4e4fa6ff2ab92" }
 ```
 
-A Python source build requires a Rust toolchain and maturin. Binary-wheel
-availability depends on the release; see [Compatibility](https://github.com/perceptron-ai-inc/mharmony/blob/main/docs/compatibility.md).
+The Git-installed Python package reports version `0.1.0`. Building it requires
+a Rust toolchain and maturin. Binary-wheel availability depends on the release;
+see [Compatibility](https://github.com/perceptron-ai-inc/mharmony/blob/main/docs/compatibility.md).
 
 ## Python quick start
 
@@ -80,6 +104,10 @@ conversation = Conversation.from_messages(
 tokens = encoding.render_conversation_for_completion(conversation, Role.ASSISTANT)
 print(encoding.decode(tokens))
 ```
+
+The first `HarmonyGptOss` load downloads and hash-verifies its pinned
+vocabulary. For offline and cache configuration, see
+[Compatibility](https://github.com/perceptron-ai-inc/mharmony/blob/main/docs/compatibility.md).
 
 See the [Python guide](https://github.com/perceptron-ai-inc/mharmony/blob/main/docs/python.md) for completion parsing, streaming, and
 reserved token groups.
@@ -127,7 +155,7 @@ For the Qwen3.5 image layout used by LeRobot, install the optional adapter and
 register its factory result:
 
 ```bash
-pip install "mharmony[qwen35]==0.1.0"
+pip install "mharmony[qwen35] @ git+https://github.com/perceptron-ai-inc/mharmony.git@9a57efbf8ada2d73641fc40081f4e4fa6ff2ab92"
 ```
 
 ```python

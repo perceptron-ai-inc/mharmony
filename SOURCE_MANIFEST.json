@@ -51,8 +51,8 @@
     {
       "mode": "0644",
       "path": "README.md",
-      "sha256": "2ba85e20d18061284b061e320e11d8c33d4583fed88614f0efa103a465af0b36",
-      "size": 7382
+      "sha256": "58539fba41a059c826316daf6cc4620448f82f2fa67c7f67d645e2a1ea984c5d",
+      "size": 8698
     },
     {
       "mode": "0644",
@@ -86,9 +86,9 @@
     },
     {
       "mode": "0644",
-      "path": "docs/header.png",
-      "sha256": "4a76ae0b3df5f71587567c0e776eda81815f4c1a441c872d3cd5ef565bae5f9a",
-      "size": 144212
+      "path": "docs/perceptron-logo.png",
+      "sha256": "123b95326a63f4dbbf2b17c5cd873126e1885dfd99a2d3d2ef7a4c964c7f1cfd",
+      "size": 259225
     },
     {
       "mode": "0644",
@@ -467,7 +467,7 @@
   "license": "Apache-2.0",
   "release_version": "0.1.0",
   "schema_version": 1,
-  "snapshot_sha256": "f31a9a6091a6765715af63c7e15f96c8cca3b594a52b6f38a6e0c5a63e5260e7",
+  "snapshot_sha256": "c2076bef6ec5263bfd6566f1f0832b788be512076f916d05b108f5f0938b526d",
   "source_release": {
     "repository": "https://github.com/perceptron-ai-inc/mharmony",
     "source_archive": "https://github.com/perceptron-ai-inc/mharmony/archive/refs/tags/v0.1.0.tar.gz",
