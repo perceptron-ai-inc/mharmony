@@ -1,0 +1,68 @@
+# Modified by Perceptron AI, Inc.; derived from OpenAI Harmony.
+[package]
+name = "mharmony"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.87"
+license = "Apache-2.0"
+authors = ["Perceptron AI, Inc."]
+description = "Portable Harmony conversation rendering and parsing"
+readme = "README.md"
+repository = "https://github.com/perceptron-ai-inc/mharmony"
+homepage = "https://github.com/perceptron-ai-inc/mharmony"
+documentation = "https://docs.rs/mharmony"
+keywords = ["ai", "chat", "harmony", "multimodal", "tokenizer"]
+categories = ["encoding", "parsing"]
+exclude = [
+    "/.github",
+    "/.cargo-home",
+    "/.rustup-home",
+    "/.venv",
+    "/dist",
+    "/target",
+    "**/__pycache__",
+    "**/*.pyc",
+    "**/*.so",
+]
+
+[lib]
+name = "mharmony"
+crate-type = ["rlib", "cdylib"]
+
+[features]
+default = []
+python-binding = ["pyo3", "numpy"]
+wasm-binding = ["wasm-bindgen", "serde-wasm-bindgen", "wasm-bindgen-futures"]
+
+[dependencies]
+anyhow = "1.0.98"
+base64 = "0.22.1"
+serde = { version = "1.0.219", features = ["derive"] }
+serde_json = { version = "1.0.140", features = ["preserve_order"] }
+serde_with = "3.12.0"
+thiserror = "2.0.12"
+fancy-regex = "0.13.0"
+regex = "1.10.3"
+rustc-hash = "1.1.0"
+bstr = "1.5.0"
+unicode-normalization-alignments = "0.1.12"
+html-escape = "0.2.13"
+sha2 = "0.10.9"
+# Use the pure-Rust `rustls` TLS backend so we don't depend on an OpenSSL
+# installation on the CI runners. We disable the default features (which
+# include `platform-native-tls`) and explicitly enable only the capabilities
+# we need.
+reqwest = { version = "0.12.5", default-features = false, features = [
+    "blocking",
+    "rustls-tls",
+] }
+pyo3 = { version = "0.25.0", optional = true, features = ["abi3-py38"] }
+numpy = { version = "0.25", optional = true }
+wasm-bindgen = { version = "0.2.100", optional = true, features = [
+    "serde-serialize",
+] }
+serde-wasm-bindgen = { version = "0.6.5", optional = true }
+wasm-bindgen-futures = { version = "0.4.42", optional = true }
+
+[dev-dependencies]
+pretty_assertions = "1.4.1"

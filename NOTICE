@@ -1,0 +1,15 @@
+mharmony
+Copyright 2025-2026 Perceptron AI, Inc.
+
+This product incorporates and modifies OpenAI Harmony
+(https://github.com/openai/harmony), licensed under the Apache License,
+Version 2.0. The upstream public revision used as the derivative-work base is
+recorded in SOURCE_MANIFEST.json.
+
+The mharmony modifications include generic media content, pointing,
+streaming, additional tokenizer integrations, and packaging changes. See
+MODIFICATIONS.md for the modification notice and LICENSE for the terms that
+apply to this distribution.
+
+This product includes third-party software. Its dependency license metadata
+is recorded in THIRD_PARTY_LICENSES.md.

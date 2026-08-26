@@ -1,0 +1,250 @@
+{
+  "schema_version": 1,
+  "encodings": {
+    "o200k_base": {
+      "special_tokens": [],
+      "reserved_special_fill": {
+        "start": 199998,
+        "end": 208391,
+        "exclude": [200015, 200100, 200101]
+      }
+    },
+    "o200k_harmony": {
+      "special_tokens": [
+        { "text": "<|startoftext|>", "id": 199998 },
+        { "text": "<|endoftext|>", "id": 199999 },
+        { "text": "<|reserved_200000|>", "id": 200000 },
+        { "text": "<|reserved_200001|>", "id": 200001 },
+        { "text": "<|return|>", "id": 200002 },
+        { "text": "<|constrain|>", "id": 200003 },
+        { "text": "<|reserved_200004|>", "id": 200004 },
+        { "text": "<|channel|>", "id": 200005 },
+        { "text": "<|start|>", "id": 200006 },
+        { "text": "<|end|>", "id": 200007 },
+        { "text": "<|message|>", "id": 200008 },
+        { "text": "<|reserved_200009|>", "id": 200009 },
+        { "text": "<|reserved_200010|>", "id": 200010 },
+        { "text": "<|reserved_200011|>", "id": 200011 },
+        { "text": "<|call|>", "id": 200012 },
+        { "text": "<|reserved_200013|>", "id": 200013 },
+        { "text": "<|vector|>", "id": 200015 },
+        { "text": "<|point_start|>", "id": 200100 },
+        { "text": "<|point_end|>", "id": 200101 }
+      ],
+      "formatting_tokens": {
+        "start": "<|start|>",
+        "message": "<|message|>",
+        "end_message": "<|end|>",
+        "end_message_done_sampling": "<|return|>",
+        "end_message_assistant_to_tool": "<|call|>",
+        "refusal": "<|refusal|>",
+        "constrained_format": "<|constrain|>",
+        "channel": "<|channel|>",
+        "begin_untrusted": "<|untrusted|>",
+        "end_untrusted": "<|end_untrusted|>",
+        "image": "<|image|>",
+        "video": "<|video|>",
+        "vector": "<|vector|>",
+        "point_start": "<|point_start|>",
+        "point_end": "<|point_end|>"
+      },
+      "media_kinds": [
+        {
+          "kind": "image",
+          "formatting_token": "image",
+          "token_id": 27,
+          "modality": "image_frame",
+          "empty_payload": { "data": [], "shape": [0] }
+        },
+        {
+          "kind": "video",
+          "formatting_token": "video",
+          "token_id": 27,
+          "modality": "video_i_frame",
+          "empty_payload": {}
+        }
+      ],
+      "reserved_group_pool": { "start": 200200, "size": 8192 },
+      "reserved_special_fill": {
+        "start": 200200,
+        "end": 208391,
+        "exclude": []
+      }
+    },
+    "cl100k_base": {
+      "special_tokens": [
+        { "text": "<|endoftext|>", "id": 100257 },
+        { "text": "<|fim_prefix|>", "id": 100258 },
+        { "text": "<|fim_middle|>", "id": 100259 },
+        { "text": "<|fim_suffix|>", "id": 100260 },
+        { "text": "<|endofprompt|>", "id": 100276 }
+      ]
+    },
+    "qwen3_harmony": {
+      "special_tokens": [
+        { "text": "<|endoftext|>", "id": 151643 },
+        { "text": "<|im_start|>", "id": 151644 },
+        { "text": "<|im_end|>", "id": 151645 },
+        { "text": "<|object_ref_start|>", "id": 151646 },
+        { "text": "<|object_ref_end|>", "id": 151647 },
+        { "text": "<|box_start|>", "id": 151648 },
+        { "text": "<|box_end|>", "id": 151649 },
+        { "text": "<|quad_start|>", "id": 151650 },
+        { "text": "<|quad_end|>", "id": 151651 },
+        { "text": "<|vision_start|>", "id": 151652 },
+        { "text": "<|vision_end|>", "id": 151653 },
+        { "text": "<|vision_pad|>", "id": 151654 },
+        { "text": "<|image_pad|>", "id": 151655 },
+        { "text": "<|video_pad|>", "id": 151656 },
+        { "text": "<tool_call>", "id": 151657 },
+        { "text": "</tool_call>", "id": 151658 },
+        { "text": "<|fim_prefix|>", "id": 151659 },
+        { "text": "<|fim_middle|>", "id": 151660 },
+        { "text": "<|fim_suffix|>", "id": 151661 },
+        { "text": "<|fim_pad|>", "id": 151662 },
+        { "text": "<|repo_name|>", "id": 151663 },
+        { "text": "<|file_sep|>", "id": 151664 },
+        { "text": "<tool_response>", "id": 151665 },
+        { "text": "</tool_response>", "id": 151666 },
+        { "text": "<think>", "id": 151667 },
+        { "text": "</think>", "id": 151668 },
+        { "text": "<|channel|>", "id": 151669 },
+        { "text": "<|constrain|>", "id": 151670 },
+        { "text": "<|untrusted|>", "id": 151671 },
+        { "text": "<|end_untrusted|>", "id": 151672 },
+        { "text": "<|refusal|>", "id": 151673 },
+        { "text": "<|message|>", "id": 151674 },
+        { "text": "<|return|>", "id": 151675 },
+        { "text": "<|point_start|>", "id": 151676 },
+        { "text": "<|point_end|>", "id": 151677 },
+        { "text": "<|vector|>", "id": 151678 },
+        { "text": "<|start|>", "id": 151644 },
+        { "text": "<|end|>", "id": 151645 },
+        { "text": "<|image|>", "id": 151655 },
+        { "text": "<|video|>", "id": 151656 },
+        { "text": "<|call|>", "id": 151657 }
+      ],
+      "formatting_tokens": {
+        "start": "<|im_start|>",
+        "message": "<|message|>",
+        "end_message": "<|im_end|>",
+        "end_message_done_sampling": "<|return|>",
+        "end_message_assistant_to_tool": "<tool_call>",
+        "refusal": "<|refusal|>",
+        "constrained_format": "<|constrain|>",
+        "channel": "<|channel|>",
+        "begin_untrusted": "<|untrusted|>",
+        "end_untrusted": "<|end_untrusted|>",
+        "image": "<|image_pad|>",
+        "video": "<|video_pad|>",
+        "vector": "<|vector|>",
+        "point_start": "<|point_start|>",
+        "point_end": "<|point_end|>"
+      },
+      "media_kinds": [
+        {
+          "kind": "image",
+          "formatting_token": "image",
+          "modality": "image_frame",
+          "empty_payload": { "data": [], "shape": [0] }
+        },
+        {
+          "kind": "video",
+          "formatting_token": "video",
+          "modality": "video_i_frame",
+          "empty_payload": {}
+        }
+      ],
+      "base_vocab_size": 151936,
+      "reserved_group_pool": { "start": 151700, "size": 8192 },
+      "reserved_special_fill": {
+        "start": 151700,
+        "end": 159891,
+        "exclude": []
+      }
+    },
+    "qwen35_harmony": {
+      "special_tokens": [
+        { "text": "<|endoftext|>", "id": 248044 },
+        { "text": "<|im_start|>", "id": 248045 },
+        { "text": "<|im_end|>", "id": 248046 },
+        { "text": "<|object_ref_start|>", "id": 248047 },
+        { "text": "<|object_ref_end|>", "id": 248048 },
+        { "text": "<|box_start|>", "id": 248049 },
+        { "text": "<|box_end|>", "id": 248050 },
+        { "text": "<|quad_start|>", "id": 248051 },
+        { "text": "<|quad_end|>", "id": 248052 },
+        { "text": "<|vision_start|>", "id": 248053 },
+        { "text": "<|vision_end|>", "id": 248054 },
+        { "text": "<|vision_pad|>", "id": 248055 },
+        { "text": "<|image_pad|>", "id": 248056 },
+        { "text": "<|video_pad|>", "id": 248057 },
+        { "text": "<tool_call>", "id": 248058 },
+        { "text": "</tool_call>", "id": 248059 },
+        { "text": "<|fim_prefix|>", "id": 248060 },
+        { "text": "<|fim_middle|>", "id": 248061 },
+        { "text": "<|fim_suffix|>", "id": 248062 },
+        { "text": "<|fim_pad|>", "id": 248063 },
+        { "text": "<|repo_name|>", "id": 248064 },
+        { "text": "<|file_sep|>", "id": 248065 },
+        { "text": "<tool_response>", "id": 248066 },
+        { "text": "</tool_response>", "id": 248067 },
+        { "text": "<think>", "id": 248068 },
+        { "text": "</think>", "id": 248069 },
+        { "text": "<|channel|>", "id": 248077 },
+        { "text": "<|constrain|>", "id": 248078 },
+        { "text": "<|untrusted|>", "id": 248079 },
+        { "text": "<|end_untrusted|>", "id": 248080 },
+        { "text": "<|refusal|>", "id": 248081 },
+        { "text": "<|message|>", "id": 248082 },
+        { "text": "<|return|>", "id": 248083 },
+        { "text": "<|point_start|>", "id": 248084 },
+        { "text": "<|point_end|>", "id": 248085 },
+        { "text": "<|vector|>", "id": 248086 },
+        { "text": "<|start|>", "id": 248045 },
+        { "text": "<|end|>", "id": 248046 },
+        { "text": "<|image|>", "id": 248056 },
+        { "text": "<|video|>", "id": 248057 },
+        { "text": "<|call|>", "id": 248058 }
+      ],
+      "formatting_tokens": {
+        "start": "<|im_start|>",
+        "message": "<|message|>",
+        "end_message": "<|im_end|>",
+        "end_message_done_sampling": "<|return|>",
+        "end_message_assistant_to_tool": "<tool_call>",
+        "refusal": "<|refusal|>",
+        "constrained_format": "<|constrain|>",
+        "channel": "<|channel|>",
+        "begin_untrusted": "<|untrusted|>",
+        "end_untrusted": "<|end_untrusted|>",
+        "image": "<|image_pad|>",
+        "video": "<|video_pad|>",
+        "vector": "<|vector|>",
+        "point_start": "<|point_start|>",
+        "point_end": "<|point_end|>"
+      },
+      "media_kinds": [
+        {
+          "kind": "image",
+          "formatting_token": "image",
+          "modality": "image_frame",
+          "empty_payload": { "data": [], "shape": [0] }
+        },
+        {
+          "kind": "video",
+          "formatting_token": "video",
+          "modality": "video_i_frame",
+          "empty_payload": {}
+        }
+      ],
+      "base_vocab_size": 248320,
+      "reserved_group_pool": { "start": 248087, "size": 8192 },
+      "reserved_special_fill": {
+        "start": 248087,
+        "end": 256278,
+        "exclude": []
+      }
+    }
+  }
+}

@@ -1,0 +1,319 @@
+# Modified by Perceptron AI, Inc.; derived from OpenAI Harmony.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_HOME: ${{ github.workspace }}/.cargo-home
+  CARGO_TERM_COLOR: always
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  RUST_BACKTRACE: "1"
+  RUSTFLAGS: --remap-path-prefix=${{ github.workspace }}=/workspace/mharmony
+  RUSTUP_HOME: ${{ github.workspace }}/.rustup-home
+  RUSTUP_TOOLCHAIN: "1.87.0"
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  rust:
+    name: Rust / ${{ matrix.name }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: rustfmt
+            command: cargo fmt --all -- --check
+          - name: clippy
+            command: cargo clippy --locked --all-targets --all-features -- -D warnings
+          - name: tests
+            command: cargo test --locked --all-targets
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Install pinned Rust toolchain
+        run: rustup toolchain install "$RUSTUP_TOOLCHAIN" --profile minimal --component clippy --component rustfmt
+
+      # The normal Rust suite is hermetic and offline-capable. The pinned
+      # tokenizer assets are exercised explicitly in the jobs below.
+      - name: Run ${{ matrix.name }}
+        run: ${{ matrix.command }}
+
+  qwen3-pinned-vocab:
+    name: Rust / pinned Qwen3 vocabulary
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      QWEN3_VOCAB_SHA256: ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Install pinned Rust toolchain
+        run: rustup toolchain install "$RUSTUP_TOOLCHAIN" --profile minimal
+
+      - name: Download and authenticate the pinned vocabulary
+        env:
+          QWEN3_VOCAB_PATH: ${{ runner.temp }}/qwen3-vocab/vocab.json
+        run: |
+          mkdir -p "$(dirname "$QWEN3_VOCAB_PATH")"
+          curl --fail --location --retry 3 --output "$QWEN3_VOCAB_PATH" \
+            "https://huggingface.co/Qwen/Qwen3-0.6B/resolve/c1899de289a04d12100db370d81485cdf75e47ca/vocab.json?download=true"
+          test "$(wc -c < "$QWEN3_VOCAB_PATH")" -eq 2776833
+          echo "$QWEN3_VOCAB_SHA256  $QWEN3_VOCAB_PATH" | sha256sum --check --strict
+
+      - name: Exercise the native tokenizer loader without skipping
+        env:
+          CARGO_TERM_COLOR: never
+          QWEN3_VOCAB_PATH: ${{ runner.temp }}/qwen3-vocab/vocab.json
+        run: |
+          test_name="tiktoken_ext::public_encodings::tests::test_load_qwen3_pinned_vocab"
+          cargo test --locked -- --list | grep -Fqx "$test_name: test"
+          cargo test --locked "$test_name" -- --ignored --exact
+
+  qwen35-pinned-vocab:
+    name: Rust / pinned Qwen3.5 vocabulary
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      QWEN35_VOCAB_SHA256: ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Install pinned Rust toolchain
+        run: rustup toolchain install "$RUSTUP_TOOLCHAIN" --profile minimal
+
+      - name: Download and authenticate the pinned vocabulary
+        env:
+          QWEN35_VOCAB_PATH: ${{ runner.temp }}/qwen35-vocab/vocab.json
+        run: |
+          mkdir -p "$(dirname "$QWEN35_VOCAB_PATH")"
+          curl --fail --location --retry 3 --output "$QWEN35_VOCAB_PATH" \
+            "https://huggingface.co/Qwen/Qwen3.5-0.8B/resolve/2fc06364715b967f1860aea9cf38778875588b17/vocab.json?download=true"
+          test "$(wc -c < "$QWEN35_VOCAB_PATH")" -eq 6722759
+          echo "$QWEN35_VOCAB_SHA256  $QWEN35_VOCAB_PATH" | sha256sum --check --strict
+
+      - name: Exercise the native tokenizer loader without skipping
+        env:
+          CARGO_TERM_COLOR: never
+          QWEN35_VOCAB_PATH: ${{ runner.temp }}/qwen35-vocab/vocab.json
+        run: |
+          test_name="tiktoken_ext::public_encodings::tests::test_load_qwen35_pinned_vocab"
+          cargo test --locked -- --list | grep -Fqx "$test_name: test"
+          cargo test --locked "$test_name" -- --ignored --exact
+
+  python-tests:
+    name: Python / build and tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.12.11"
+
+      - name: Install pinned Rust toolchain
+        run: rustup toolchain install "$RUSTUP_TOOLCHAIN" --profile minimal
+
+      - name: Create test environment
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install maturin==1.9.4 mypy==1.16.1 ruff==0.12.2
+
+      # The extras are part of the package contract: qwen35 tests must prove a
+      # clean consumer gets every optional runtime dependency from metadata.
+      - name: Build and install project with test extras
+        run: .venv/bin/python -m pip install --no-build-isolation --editable ".[test,qwen35]"
+
+      - name: Verify installed package imports
+        if: ${{ !cancelled() }}
+        run: .venv/bin/python -c "import mharmony; assert mharmony.__file__; exec('from mharmony import *')"
+
+      - name: Check Python syntax
+        if: ${{ !cancelled() }}
+        run: .venv/bin/python -m compileall -q python tests
+
+      - name: Lint and format-check Python
+        if: ${{ !cancelled() }}
+        run: |
+          .venv/bin/ruff check python tests
+          .venv/bin/ruff format --check python tests
+
+      - name: Type-check Python
+        if: ${{ !cancelled() }}
+        run: .venv/bin/mypy python/mharmony
+
+      # pytest is intentionally unconditional: an absent or empty Python suite
+      # is not considered a successful test lane.
+      - name: Run Python tests
+        if: ${{ !cancelled() }}
+        run: .venv/bin/python -m pytest -ra
+
+      - name: Verify bundled dependency licenses
+        if: ${{ !cancelled() }}
+        run: .venv/bin/python scripts/generate_third_party_licenses.py --check
+
+  python-base:
+    name: Python / ${{ matrix.python-version }} base package
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.13"]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install pinned Rust toolchain
+        run: rustup toolchain install "$RUSTUP_TOOLCHAIN" --profile minimal
+
+      - name: Build a base-only development environment
+        run: |
+          python -m venv .venv-base
+          .venv-base/bin/python -m pip install maturin==1.9.4 mypy==1.16.1
+          .venv-base/bin/python -m pip install --no-build-isolation --editable ".[test]"
+
+      - name: Verify base API, typing, and tests
+        run: |
+          cmp SOURCE_MANIFEST.json python/mharmony/SOURCE_MANIFEST.json
+          cmp MODIFICATIONS.md python/mharmony/MODIFICATIONS.md
+          cmp THIRD_PARTY_LICENSES.md python/mharmony/THIRD_PARTY_LICENSES.md
+          .venv-base/bin/python scripts/generate_third_party_licenses.py --check
+          .venv-base/bin/python -c "import mharmony; exec('from mharmony import *')"
+          .venv-base/bin/mypy python/mharmony
+          .venv-base/bin/python -m pytest -ra
+
+  package-smoke:
+    name: Package / ${{ matrix.name }} clean install
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux wheel
+            os: ubuntu-24.04
+            artifact: wheel
+          - name: macOS wheel
+            os: macos-14
+            artifact: wheel
+          - name: Windows wheel
+            os: windows-2022
+            artifact: wheel
+          - name: source distribution
+            os: ubuntu-24.04
+            artifact: sdist
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.12.11"
+
+      - name: Install pinned Rust toolchain
+        run: rustup toolchain install "$RUSTUP_TOOLCHAIN" --profile minimal
+
+      - name: Install build frontend
+        run: python -m pip install maturin==1.9.4
+
+      - name: Build wheel
+        if: matrix.artifact == 'wheel'
+        run: maturin build --release --locked --out dist
+
+      - name: Build source distribution
+        if: matrix.artifact == 'sdist'
+        run: maturin sdist --out dist
+
+      - name: Scan and install artifact into a clean environment
+        env:
+          ARTIFACT_KIND: ${{ matrix.artifact }}
+        run: |
+          cmp SOURCE_MANIFEST.json python/mharmony/SOURCE_MANIFEST.json
+          cmp MODIFICATIONS.md python/mharmony/MODIFICATIONS.md
+          cmp THIRD_PARTY_LICENSES.md python/mharmony/THIRD_PARTY_LICENSES.md
+          python scripts/generate_third_party_licenses.py --check
+          smoke_venv="$RUNNER_TEMP/mharmony-${ARTIFACT_KIND}-smoke"
+          python -m venv "$smoke_venv"
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            smoke_python="$smoke_venv/Scripts/python.exe"
+          else
+            smoke_python="$smoke_venv/bin/python"
+          fi
+          shopt -s nullglob
+          if [[ "$ARTIFACT_KIND" == "wheel" ]]; then
+            package=(dist/*.whl)
+          else
+            package=(dist/*.tar.gz)
+          fi
+          test "${#package[@]}" -eq 1
+          python scripts/check_release_artifact.py "${package[0]}" --source-root "$GITHUB_WORKSPACE"
+          "$smoke_python" -m pip install "${package[0]}"
+          cd "$RUNNER_TEMP"
+          "$smoke_python" -I -c "import importlib.metadata as metadata; import importlib.resources as resources; import json; import mharmony; exec('from mharmony import *'); root = resources.files('mharmony'); assert metadata.version('mharmony') == '0.1.0'; assert root.joinpath('py.typed').is_file(); assert json.loads(root.joinpath('SOURCE_MANIFEST.json').read_text())['source_release']['tag'] == 'v0.1.0'; assert root.joinpath('MODIFICATIONS.md').is_file(); assert root.joinpath('THIRD_PARTY_LICENSES.md').is_file(); files = {str(path) for path in metadata.files('mharmony') or ()}; assert any(path.endswith('licenses/NOTICE') for path in files); assert any(path.endswith('licenses/MODIFICATIONS.md') for path in files); assert any(path.endswith('licenses/THIRD_PARTY_LICENSES.md') for path in files)"
+
+  wasm:
+    name: WebAssembly / compile check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Install pinned Rust toolchain and wasm target
+        run: |
+          rustup toolchain install "$RUSTUP_TOOLCHAIN" --profile minimal
+          rustup target add --toolchain "$RUSTUP_TOOLCHAIN" wasm32-unknown-unknown
+
+      # Compile-check only: the repository does not yet contain npm packaging
+      # or a browser/Node test harness. Compiler errors still fail this lane;
+      # intentionally unsupported Qwen runtime loading is not exercised here.
+      - name: Compile wasm binding
+        run: cargo check --locked --lib --target wasm32-unknown-unknown --no-default-features --features wasm-binding

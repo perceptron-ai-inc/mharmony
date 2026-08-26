@@ -1,0 +1,109 @@
+{
+  "config": {
+    "image": {
+      "max_num_patches": 3600,
+      "min_num_patches": null,
+      "normalize_mean": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "normalize_std": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "patch_size": 16,
+      "pixel_shuffle_scale": 1,
+      "resize": [
+        224,
+        224
+      ]
+    }
+  },
+  "stream": {
+    "events": [
+      {
+        "data": {
+          "Tokens": [
+            200006,
+            173781,
+            200008
+          ]
+        },
+        "modality": "role_marker",
+        "role": "assistant",
+        "tags": {},
+        "time": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "data": {
+          "Tokens": [
+            200100,
+            27,
+            11945,
+            8633,
+            580,
+            3086,
+            11180,
+            1,
+            3472,
+            580,
+            17615,
+            62,
+            15,
+            1,
+            260,
+            580,
+            16,
+            13,
+            1161,
+            12068,
+            220,
+            18,
+            13,
+            3384,
+            12068,
+            1,
+            11241,
+            200101
+          ]
+        },
+        "modality": "text",
+        "role": "assistant",
+        "tags": {},
+        "time": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "data": {
+          "Tokens": [
+            200007
+          ]
+        },
+        "modality": "special_token",
+        "role": "assistant",
+        "tags": {},
+        "time": [
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "priority": [
+      "role_marker",
+      "modality_tag",
+      "text",
+      "special_token",
+      "vector",
+      "image_frame",
+      "video_i_frame",
+      "video_p_frame"
+    ]
+  }
+}

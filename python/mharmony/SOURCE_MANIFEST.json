@@ -1,0 +1,484 @@
+{
+  "artifact": "mharmony",
+  "derivative_work": {
+    "modification_notices": "MODIFICATIONS.md",
+    "modified": true,
+    "upstream_history_included": false
+  },
+  "files": [
+    {
+      "mode": "0644",
+      "path": ".github/workflows/ci.yml",
+      "sha256": "7c700724048048ec23972ee10d9b084bfd80ce392281f0573a5735e35de480a2",
+      "size": 12498
+    },
+    {
+      "mode": "0644",
+      "path": ".gitignore",
+      "sha256": "9cb44961835dd2a93da1b090f18fcb049cf76162733cada937e51ec2a9539bf9",
+      "size": 242
+    },
+    {
+      "mode": "0644",
+      "path": "Cargo.lock",
+      "sha256": "2f27ffa8295022a8aedf430732d501a27555086270c0a814601d88cbf1ba0f20",
+      "size": 53525
+    },
+    {
+      "mode": "0644",
+      "path": "Cargo.toml",
+      "sha256": "6090036d1a4356be6406cef40a688dc013c13a392199f743916f3c8b0d6b648a",
+      "size": 2026
+    },
+    {
+      "mode": "0644",
+      "path": "LICENSE",
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "size": 11357
+    },
+    {
+      "mode": "0644",
+      "path": "MODIFICATIONS.md",
+      "sha256": "1feb53242b523705db835314b7526f7bf35a4b011e6ce7623fb17b1f3f9bee2d",
+      "size": 1106
+    },
+    {
+      "mode": "0644",
+      "path": "NOTICE",
+      "sha256": "7a08385514e7bb8b44ad490aec133b05c1dd7c52a2af049e63a2d49d4d92889f",
+      "size": 651
+    },
+    {
+      "mode": "0644",
+      "path": "README.md",
+      "sha256": "2ba85e20d18061284b061e320e11d8c33d4583fed88614f0efa103a465af0b36",
+      "size": 7382
+    },
+    {
+      "mode": "0644",
+      "path": "SECURITY.md",
+      "sha256": "93074c22fd1a746118c858a9b9cbdecb1a0dbccf46ce3dd1dafdc509cd7bcbf6",
+      "size": 2326
+    },
+    {
+      "mode": "0644",
+      "path": "THIRD_PARTY_LICENSES.md",
+      "sha256": "e5d9b8c1c038a4e7284c5e7f9ab27e89ab6b66ca7d0704620aee51abd963b182",
+      "size": 577965
+    },
+    {
+      "mode": "0644",
+      "path": "data/token_tables.json",
+      "sha256": "9956274e932bd57b7b95bdca183bd6f394fd357d5f632b76f354fc32ebfa4c5c",
+      "size": 9493
+    },
+    {
+      "mode": "0644",
+      "path": "docs/compatibility.md",
+      "sha256": "62797feb14f534a1b2854d15be590be248ff3b9cf6ac746bc600187df8e25e23",
+      "size": 4132
+    },
+    {
+      "mode": "0644",
+      "path": "docs/format.md",
+      "sha256": "f08ed5136a3a3b7ffc630b1a5cc85f047c9083f9240611d8ca34ac589c85fc21",
+      "size": 28195
+    },
+    {
+      "mode": "0644",
+      "path": "docs/header.png",
+      "sha256": "4a76ae0b3df5f71587567c0e776eda81815f4c1a441c872d3cd5ef565bae5f9a",
+      "size": 144212
+    },
+    {
+      "mode": "0644",
+      "path": "docs/python.md",
+      "sha256": "d292609db89f6b52b9ab70101f3032c099840d038ab6f618cedf20ad2b0b7bd8",
+      "size": 10461
+    },
+    {
+      "mode": "0644",
+      "path": "docs/rust.md",
+      "sha256": "afc45e91107c67bef3dc920305111f5a0438253f7e328b3899995aa89db491e1",
+      "size": 6775
+    },
+    {
+      "mode": "0644",
+      "path": "docs/stability.md",
+      "sha256": "377dd462c53a05db4a84b3f144c3820d9724befcc67d62624c41290bd39e995a",
+      "size": 2383
+    },
+    {
+      "mode": "0644",
+      "path": "pyproject.toml",
+      "sha256": "f2544138e3c2029d9a11c26e1e62e53d20ae31540910a2e861abb7c8e8c80828",
+      "size": 2519
+    },
+    {
+      "mode": "0644",
+      "path": "python/mharmony/MODIFICATIONS.md",
+      "sha256": "1feb53242b523705db835314b7526f7bf35a4b011e6ce7623fb17b1f3f9bee2d",
+      "size": 1106
+    },
+    {
+      "mode": "0644",
+      "path": "python/mharmony/THIRD_PARTY_LICENSES.md",
+      "sha256": "e5d9b8c1c038a4e7284c5e7f9ab27e89ab6b66ca7d0704620aee51abd963b182",
+      "size": 577965
+    },
+    {
+      "mode": "0644",
+      "path": "python/mharmony/__init__.py",
+      "sha256": "2f6387cd906663dd2d996569c23921f9f62e909904c907d111655ee37a628f4d",
+      "size": 47416
+    },
+    {
+      "mode": "0644",
+      "path": "python/mharmony/mharmony.pyi",
+      "sha256": "ce1201e2c2af89b8ea96b9cae2b89ef492f40dd433769e2c4df28bde1703738e",
+      "size": 5675
+    },
+    {
+      "mode": "0644",
+      "path": "python/mharmony/processors/__init__.py",
+      "sha256": "765992559f96be08f2ab054eede452afa5e6d1a21c1145b336e97315cc646545",
+      "size": 330
+    },
+    {
+      "mode": "0644",
+      "path": "python/mharmony/processors/qwen35.py",
+      "sha256": "3fc55e97fd6eef92ca84ad6fe749f55fb3214095cce3af0e5ba3bc7cea4fb25a",
+      "size": 9512
+    },
+    {
+      "mode": "0644",
+      "path": "python/mharmony/py.typed",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "size": 1
+    },
+    {
+      "mode": "0755",
+      "path": "run_checks.sh",
+      "sha256": "98dd00ccb7bdfd16d9fe0b4b900cf8061c59d34c33b4e1f139a85dcba591a15c",
+      "size": 503
+    },
+    {
+      "mode": "0644",
+      "path": "scripts/check_release_artifact.py",
+      "sha256": "c8c43cca11abd4ad93609f118ffba96715cf8b1473701bf1f2cd6adb97ce4b97",
+      "size": 13066
+    },
+    {
+      "mode": "0644",
+      "path": "scripts/generate_third_party_licenses.py",
+      "sha256": "79053d60528adab4a7e966745410f7daa31d87b3546c9407afc0082a655f8389",
+      "size": 7385
+    },
+    {
+      "mode": "0644",
+      "path": "src/channels.rs",
+      "sha256": "67d7b5fea2cd8e8932c4f1525da93a40c28af12655f503cb4c86feef1817b7df",
+      "size": 4939
+    },
+    {
+      "mode": "0644",
+      "path": "src/chat.rs",
+      "sha256": "391c345c283afebbca8eb298307910bb01cd49a168cfdc124ae2825cb8369f89",
+      "size": 51714
+    },
+    {
+      "mode": "0644",
+      "path": "src/encoding.rs",
+      "sha256": "5ca72cf4eb2d3fa43307a40b56ed12d70f62813b013c868556effab08368fef0",
+      "size": 117692
+    },
+    {
+      "mode": "0644",
+      "path": "src/lib.rs",
+      "sha256": "0aa51975f1ad1321b7d6a5343a2d8a13ea79c19410f0ba289f406a278df6e70d",
+      "size": 981
+    },
+    {
+      "mode": "0644",
+      "path": "src/parity.rs",
+      "sha256": "99cfe863e1c8333dfbe887d6dc97c7efd6578ad459981dba8b812ce68e34e7c9",
+      "size": 7120
+    },
+    {
+      "mode": "0644",
+      "path": "src/point_stream.rs",
+      "sha256": "4a7fcd89dd64ab40d5e84f0bbea447594c62152d2b8085ebd84245b52c768939",
+      "size": 9091
+    },
+    {
+      "mode": "0644",
+      "path": "src/preprocess.rs",
+      "sha256": "c150ce6594b67ad684810932523a157ad9bb3e20df4a9c6ec66d7e1c055bbcc0",
+      "size": 10881
+    },
+    {
+      "mode": "0644",
+      "path": "src/py_module.rs",
+      "sha256": "fe8c986f73f98ad4b860031dca1946e6a0e28cd6e9b559a695de77a9789f28d2",
+      "size": 55718
+    },
+    {
+      "mode": "0644",
+      "path": "src/registry.rs",
+      "sha256": "6656913c7cfb43060e531f8a5b9597c7ed0d0d50a14441d694812d8b421c9283",
+      "size": 18969
+    },
+    {
+      "mode": "0644",
+      "path": "src/stream.rs",
+      "sha256": "8b4752ccf36e638680eb78b1342ec61d3cb6813e32601c04a124abd0547be23e",
+      "size": 6724
+    },
+    {
+      "mode": "0644",
+      "path": "src/tests.rs",
+      "sha256": "66db1e13e2e73f22efd7f2ce97a8d704e8ffa14ed78f58448c6d3b9e102c8a3e",
+      "size": 134464
+    },
+    {
+      "mode": "0644",
+      "path": "src/tiktoken.rs",
+      "sha256": "3579e030bb26173ba83dc29d71562dabacb4722e7207f13bf501ecd7c59ed4ba",
+      "size": 23559
+    },
+    {
+      "mode": "0644",
+      "path": "src/tiktoken_ext/mod.rs",
+      "sha256": "8f1ff0c6e277eb8f145eb36da6be8b572ce2aed875e82b3c02c4b682ce9e2847",
+      "size": 148
+    },
+    {
+      "mode": "0644",
+      "path": "src/tiktoken_ext/public_encodings.rs",
+      "sha256": "a9f2246e30c81121fd97155d03fe3593f975b89fc9e9fd7adf20e81211a7e9f3",
+      "size": 57538
+    },
+    {
+      "mode": "0644",
+      "path": "src/token_tables.rs",
+      "sha256": "18add48e1b3073a1f02123705657f8ecfff952467356fdb767c7fc995ca86dad",
+      "size": 4948
+    },
+    {
+      "mode": "0644",
+      "path": "src/wasm_module.rs",
+      "sha256": "4492e0b1ea6573d6f8eb270297303e18eefa60838d7e5764fa4df83102e3bee0",
+      "size": 11290
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/parity/image.json",
+      "sha256": "0f3798b736c4fae807cfdb9eaff037e61b5b965ec556bba51beebce51dd8f728",
+      "size": 2061
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/parity/mixed_conversation.json",
+      "sha256": "5e0db737044c42a9319a3420f6b7a4255384ea7fac1fa85a7d158e5692450d53",
+      "size": 3620
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/parity/pointing_clip.json",
+      "sha256": "449d91ef56870e3e711695679ce7a076741d27678bb509125c2976236da59432",
+      "size": 1805
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/parity/pointing_point.json",
+      "sha256": "a7e383d2aaff4cdfb88528b1268905be7ed5cc10385f613effaa9cc9bf258268",
+      "size": 1813
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/parity/video.json",
+      "sha256": "de2d80f7436bf51009e0760e4e157f4782efdef8683a47830c11696296c18cca",
+      "size": 2009
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_browser_and_function_tool.txt",
+      "sha256": "1dc79aa45f5c8a10eb69e62dde5adb51f68d88cabd4a75bfa452619f7fa0427b",
+      "size": 2193
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_browser_and_python_tool.txt",
+      "sha256": "8d7607e12dddab0a830560bb878e2b2fc2199824f67cedd352585e00f5b57229",
+      "size": 2431
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_browser_tool_only.txt",
+      "sha256": "e74d1ceb8c82aacbd6b0e337b35cce53509910d9ccb6c33f40692f0d28d7a8d5",
+      "size": 1815
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_does_not_drop_if_ongoing_analysis.txt",
+      "sha256": "127d10131742c057604cf2e02d782bbec574f63d5e74f4d66f0d6b368f43455c",
+      "size": 436
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_dropping_cot_by_default.txt",
+      "sha256": "16c172504b489aed559616b46a2a88f132e25cf9c74c81b6f7e08def9b550d04",
+      "size": 178
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_keep_analysis_between_finals.txt",
+      "sha256": "f10c5d7cbd20c62f592773f2cc5afaed4dbd465ccb8889131fdc9c6c92e6d97d",
+      "size": 263
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_no_tools.txt",
+      "sha256": "b9554cb7c59d33b0a46c709e012de40a030d9a3998ea3e6143319e8dc9bc44a3",
+      "size": 254
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_preserve_cot.txt",
+      "sha256": "45578dfbd61c8a55669db3e48ced35b79ee3ac89e47bd0240ed1bf2a7fe40a09",
+      "size": 293
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_reasoning_system_message.txt",
+      "sha256": "2311694453532522fff9b86f9ae8304fb81d847d560cf52af440a79626e7db9d",
+      "size": 261
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_reasoning_system_message_no_instruction.txt",
+      "sha256": "20a24124b98723a7d47b34692ccbefd2da07dfe0c9fb6182c29ac868abd06de6",
+      "size": 294
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_reasoning_system_message_with_dates.txt",
+      "sha256": "a0350b78ad0c6c8c96b5f6b71154a24645c9c5f4030846f648d0ab8c11314456",
+      "size": 288
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_render_functions_with_parameters.txt",
+      "sha256": "06c7c2be71afa3d28a6f46761b0ffd068b6405918b4b67c6793ee2f4774c6897",
+      "size": 1498
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_simple_convo.txt",
+      "sha256": "58b8254bcfc82b36ba6e72c7f379efa73046ac28d9414db1c0516736237f9b5b",
+      "size": 273
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_simple_convo_high_effort.txt",
+      "sha256": "d7252b14e484fa71b77c23d6f4f42313f3a561cbd0ccbaa6c8c765bedcd9e996",
+      "size": 406
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_simple_convo_high_effort_no_instruction.txt",
+      "sha256": "31ce1e9707b3e9e6ee42704939635c2c1c31fb2d15764c098b429c7f42491324",
+      "size": 313
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_simple_convo_low_effort.txt",
+      "sha256": "caa68cbabed01c555dd609d7f84cb0fc48ba7ad83f2371bb64d0b6cdd91e452a",
+      "size": 405
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_simple_convo_low_effort_no_instruction.txt",
+      "sha256": "bad669424feea52951fa065e619e058c4874845b1a307302870963e574b9de38",
+      "size": 312
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_simple_convo_medium_effort.txt",
+      "sha256": "7e0786a4d7f835f1ef6ddb89a9da38b33ffad3ad6da0e9de74b860a5fbe7ba0f",
+      "size": 408
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_simple_convo_medium_effort_no_instruction.txt",
+      "sha256": "0efb0eec38d5db4404116d01a96b6501bbba40d1b945c89b8f8d2f14da97432c",
+      "size": 315
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_simple_reasoning_response.txt",
+      "sha256": "b0b2174d5e5e802de59e443e7de6dba5e9e78da94bda032a251147d96d2c1ebe",
+      "size": 169
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_simple_tool_call.txt",
+      "sha256": "e03e6db21dbeecb4b8d0e1afeef537d7618f71f803281ecc15449a1caca8195c",
+      "size": 212
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_streamable_parser.txt",
+      "sha256": "3fde79d1c8a043058be2ca36585807e0cb2c5a86e3a43f85fe3aefbe533b480e",
+      "size": 561
+    },
+    {
+      "mode": "0644",
+      "path": "test-data/test_tool_response_parsing.txt",
+      "sha256": "eeb6155b273095401555869a1b0dca086a722dd620d752b0a4e819b471c96509",
+      "size": 103
+    },
+    {
+      "mode": "0755",
+      "path": "test_python.sh",
+      "sha256": "7138818e19ac1471c5881cc917f5496d31652c8acca24481b67eccddb96763b1",
+      "size": 171
+    },
+    {
+      "mode": "0644",
+      "path": "tests/test_native_processor_integration.py",
+      "sha256": "ec4c97267a108e87ad74ec46af2b3023aac96defa088089b4268646e001e7793",
+      "size": 18087
+    },
+    {
+      "mode": "0644",
+      "path": "tests/test_python_facade.py",
+      "sha256": "0e10694f5d34d787c51417eba589f35a27788c85637f17e38fed267c7acecf23",
+      "size": 10281
+    },
+    {
+      "mode": "0644",
+      "path": "tests/test_qwen35_processor.py",
+      "sha256": "2e2f55dc3b6271b033058144aaa68b5968eff25acbcaa6fa113b1aebd3d21893",
+      "size": 6190
+    }
+  ],
+  "inventory_scope": "allowlisted source files; generated manifests excluded",
+  "license": "Apache-2.0",
+  "release_version": "0.1.0",
+  "schema_version": 1,
+  "snapshot_sha256": "f31a9a6091a6765715af63c7e15f96c8cca3b594a52b6f38a6e0c5a63e5260e7",
+  "source_release": {
+    "repository": "https://github.com/perceptron-ai-inc/mharmony",
+    "source_archive": "https://github.com/perceptron-ai-inc/mharmony/archive/refs/tags/v0.1.0.tar.gz",
+    "tag": "v0.1.0"
+  },
+  "upstream": {
+    "license": "Apache-2.0",
+    "name": "OpenAI Harmony",
+    "repository": "https://github.com/openai/harmony",
+    "revision": "da2389a4b2daced4f98bda50e9174b35d37e3b1d",
+    "revision_url": "https://github.com/openai/harmony/tree/da2389a4b2daced4f98bda50e9174b35d37e3b1d",
+    "version": "0.0.8"
+  }
+}
