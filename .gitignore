@@ -1,0 +1,18 @@
+# Modified by Perceptron AI, Inc.; derived from OpenAI Harmony.
+/target/
+/.cargo-home/
+/.rustup-home/
+/.venv/
+/build/
+/dist/
+*.egg-info/
+*.so
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.DS_Store
+.idea/
+.vscode/
