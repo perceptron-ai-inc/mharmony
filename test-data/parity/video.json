@@ -1,0 +1,119 @@
+{
+  "config": {
+    "image": {
+      "max_num_patches": 3600,
+      "min_num_patches": null,
+      "normalize_mean": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "normalize_std": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "patch_size": 16,
+      "pixel_shuffle_scale": 1,
+      "resize": [
+        224,
+        224
+      ]
+    }
+  },
+  "stream": {
+    "events": [
+      {
+        "data": {
+          "Tokens": [
+            200006,
+            1428,
+            200008
+          ]
+        },
+        "modality": "role_marker",
+        "role": "user",
+        "tags": {},
+        "time": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "data": {
+          "Tokens": [
+            64614,
+            277,
+            750,
+            495,
+            3823,
+            13
+          ]
+        },
+        "modality": "text",
+        "role": "user",
+        "tags": {},
+        "time": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "data": {
+          "Tokens": [
+            27
+          ]
+        },
+        "modality": "special_token",
+        "role": "user",
+        "tags": {
+          "media_ref_id": "video_0",
+          "media_ref_type": "video"
+        },
+        "time": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "data": {
+          "Video": {}
+        },
+        "modality": "video_i_frame",
+        "role": "user",
+        "tags": {
+          "media_ref_id": "video_0",
+          "media_ref_type": "video"
+        },
+        "time": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "data": {
+          "Tokens": [
+            200007
+          ]
+        },
+        "modality": "special_token",
+        "role": "user",
+        "tags": {},
+        "time": [
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "priority": [
+      "role_marker",
+      "modality_tag",
+      "text",
+      "special_token",
+      "vector",
+      "image_frame",
+      "video_i_frame",
+      "video_p_frame"
+    ]
+  }
+}
