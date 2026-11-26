@@ -3,9 +3,12 @@ from __future__ import annotations
 
 # ruff: noqa: E402 -- optional dependencies must be checked before their imports.
 
+import base64
 import io
 import struct
+import warnings
 import zlib
+from typing import Any
 
 import pytest
 
@@ -15,6 +18,15 @@ pytest.importorskip("torchvision")
 pytest.importorskip("transformers")
 pytest.importorskip("PIL")
 
+from mharmony import (
+    Conversation,
+    HarmonyEncodingName,
+    ImageContent,
+    MediaRef,
+    Message,
+    Role,
+    load_harmony_encoding,
+)
 from mharmony import (
     create_qwen35_image_processor as root_create_qwen35_image_processor,
 )
@@ -26,7 +38,10 @@ from mharmony.processors import (
     create_qwen35_mharmony_image_processor,
 )
 from mharmony.processors import qwen35
-from mharmony.processors.qwen35 import process_qwen35_image_bytes
+from mharmony.processors.qwen35 import (
+    process_qwen35_image_array,
+    process_qwen35_image_bytes,
+)
 from PIL import Image
 
 
@@ -187,3 +202,158 @@ def test_decode_pixel_limit_must_be_positive() -> None:
             min_num_patches=None,
             max_decode_pixels=0,
         )
+
+
+def _random_rgb(height: int, width: int) -> np.ndarray:
+    rng = np.random.default_rng(0)
+    return rng.integers(0, 256, (height, width, 3), dtype=np.uint8)
+
+
+@pytest.mark.parametrize(
+    "options",
+    [
+        # Downsampled to the patch budget, with merged patches and temporal packing.
+        {
+            "patch_size": 4,
+            "merge_size": 2,
+            "temporal_patch_size": 2,
+            "max_num_patches": 64,
+            "min_num_patches": None,
+        },
+        # Upsampled to a minimum patch count.
+        {
+            "patch_size": 4,
+            "merge_size": 1,
+            "temporal_patch_size": 1,
+            "max_num_patches": None,
+            "min_num_patches": 400,
+        },
+    ],
+)
+def test_array_matches_lossless_bytes_exactly(options: dict[str, Any]) -> None:
+    image = _random_rgb(37, 53)
+
+    from_array = process_qwen35_image_array(image, **options)
+    from_bytes = process_qwen35_image_bytes(_encode_png(image), **options)
+
+    assert from_array.shape == from_bytes.shape
+    assert from_array.data.dtype == from_bytes.data.dtype == np.float32
+    assert np.array_equal(from_array.data, from_bytes.data)
+
+
+def test_array_input_may_be_read_only_and_is_not_modified() -> None:
+    image = _random_rgb(16, 16)
+    original = image.copy()
+    image.setflags(write=False)
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        result = process_qwen35_image_array(
+            image,
+            patch_size=4,
+            merge_size=1,
+            temporal_patch_size=1,
+            max_num_patches=None,
+            min_num_patches=None,
+        )
+
+    assert result.shape == [4, 4, 48]
+    assert np.array_equal(image, original)
+
+
+@pytest.mark.parametrize(
+    "image",
+    [
+        np.zeros((8, 8, 3), dtype=np.float32),
+        np.zeros((8, 8), dtype=np.uint8),
+        np.zeros((8, 8, 4), dtype=np.uint8),
+    ],
+)
+def test_array_input_must_be_rgb_uint8(image: np.ndarray) -> None:
+    with pytest.raises(ValueError, match=r"uint8 with shape \[height, width, 3\]"):
+        process_qwen35_image_array(
+            image,
+            patch_size=4,
+            merge_size=1,
+            temporal_patch_size=1,
+            max_num_patches=None,
+            min_num_patches=None,
+        )
+
+
+def test_factory_resolves_sources_to_arrays_or_bytes() -> None:
+    image = _random_rgb(24, 32)
+    assets: dict[str, Any] = {"raw": image, "encoded": _encode_png(image)}
+    resolved: list[Any] = []
+
+    def resolve(source: Any) -> Any:
+        resolved.append(source)
+        return assets[source["asset"]]
+
+    processor = create_qwen35_image_processor(
+        patch_size=4, max_num_patches=64, resolve_source=resolve
+    )
+    config = {"pixel_shuffle_scale": 2, "temporal_patch_size": 2}
+
+    from_array = processor({"asset": "raw"}, config)
+    from_bytes = processor({"asset": "encoded"}, config)
+    inline = processor(_encode_png(image), config)
+
+    assert resolved == [{"asset": "raw"}, {"asset": "encoded"}]
+    assert from_array.shape == from_bytes.shape == inline.shape == [6, 8, 96]
+    assert np.array_equal(from_array.data, from_bytes.data)
+    assert np.array_equal(from_array.data, inline.data)
+
+
+def test_factory_rejects_a_source_without_a_resolver() -> None:
+    processor = create_qwen35_image_processor()
+
+    with pytest.raises(TypeError, match="dict source; pass resolve_source"):
+        processor({"asset": "raw"}, {})
+
+
+def test_rendering_a_source_matches_inline_png_bytes() -> None:
+    encoding = load_harmony_encoding(HarmonyEncodingName.HARMONY_GPT_OSS)
+    image = _random_rgb(40, 56)
+    frames = {"front": image}
+    processor = create_qwen35_image_processor(
+        patch_size=4,
+        max_num_patches=96,
+        pixel_shuffle_scale=2,
+        temporal_patch_size=2,
+        resolve_source=lambda source: frames[source["frame"]],
+    )
+
+    def render(content: ImageContent) -> dict[str, Any]:
+        conversation = Conversation.from_messages(
+            [Message.from_role_and_content(Role.USER, content)]
+        )
+        rendered = encoding.render_conversation_multimodal_with_processors(
+            conversation, media_processors={"image": processor}
+        )
+        return next(
+            event
+            for event in rendered["stream"]["events"]
+            if event["modality"] == "image_frame"
+        )
+
+    inline = render(
+        ImageContent(
+            media_ref=MediaRef(
+                id="camera.front",
+                mime="image/png",
+                bytes_b64=base64.b64encode(_encode_png(image)).decode("ascii"),
+            )
+        )
+    )
+    from_source = render(
+        ImageContent(media_ref=MediaRef(id="camera.front"), source={"frame": "front"})
+    )
+
+    source_image = from_source.pop("data")["Image"]
+    inline_image = inline.pop("data")["Image"]
+    assert from_source == inline
+    assert source_image["shape"] == inline_image["shape"] == [8, 10, 96]
+    assert np.array_equal(
+        np.asarray(source_image["data"]), np.asarray(inline_image["data"])
+    )
