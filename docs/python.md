@@ -241,10 +241,35 @@ critical, record and pin the resolved NumPy, Pillow, PyTorch, torchvision, and
 Transformers versions with each checkpoint. `create_qwen35_mharmony_image_processor`
 is retained as a compatibility alias for existing integrations.
 
-The adapter accepts inline image bytes, not an opaque `source` descriptor. It
-also enforces a pre-decode pixel ceiling (`max_decode_pixels`, 64 million by
-default) before allocating an RGB array; choose a lower bound for constrained
-workers. Native multimodal rendering separately limits decoded inline payloads
+The adapter decodes inline image bytes. To render frames that are already
+decoded, such as camera frames in a robot control loop, pass each frame through
+the envelope's `source` and give the factory a `resolve_source` callable. It
+maps the source to an RGB `uint8` array shaped `[height, width, 3]`, which is
+patchified without any image codec, or to encoded image bytes:
+
+```python
+frames = {"front": front_rgb}  # uint8 arrays shaped [height, width, 3]
+
+content = ImageContent(
+    media_ref=MediaRef(id="camera.front"),
+    source={"frame": "front"},
+)
+image_processor = create_qwen35_image_processor(
+    resolve_source=lambda source: frames[source["frame"]],
+)
+```
+
+An array produces exactly the patches its lossless encoding (for example PNG)
+would, so encoding decoded frames only to have the adapter decode them again
+adds latency without changing the result. Arrays are used as given: EXIF
+orientation applies only to encoded bytes. Without `resolve_source`, the
+adapter rejects a non-bytes source with `TypeError`.
+`mharmony.processors.qwen35.process_qwen35_image_array` applies the same
+transform to one array directly.
+
+The adapter enforces a pre-decode pixel ceiling on encoded bytes
+(`max_decode_pixels`, 64 million by default) before allocating an RGB array;
+choose a lower bound for constrained workers. Native multimodal rendering separately limits decoded inline payloads
 to 64 MiB by default. Set a positive `max_inline_media_bytes` value in
 `preprocess_config` to use a lower application-specific ceiling.
 

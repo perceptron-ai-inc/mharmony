@@ -93,8 +93,8 @@
     {
       "mode": "0644",
       "path": "docs/python.md",
-      "sha256": "d292609db89f6b52b9ab70101f3032c099840d038ab6f618cedf20ad2b0b7bd8",
-      "size": 10461
+      "sha256": "9ca3c8c2fb4d65c918b8d3ecac66ed9fd4030790a9451b7fb999a83e872ec517",
+      "size": 11539
     },
     {
       "mode": "0644",
@@ -147,8 +147,8 @@
     {
       "mode": "0644",
       "path": "python/mharmony/processors/qwen35.py",
-      "sha256": "3fc55e97fd6eef92ca84ad6fe749f55fb3214095cce3af0e5ba3bc7cea4fb25a",
-      "size": 9512
+      "sha256": "1b837ad4ed1874fd38e417dbd8e2a5dbe14e253f4305a318bdea6d2e206be6e5",
+      "size": 12970
     },
     {
       "mode": "0644",
@@ -459,15 +459,15 @@
     {
       "mode": "0644",
       "path": "tests/test_qwen35_processor.py",
-      "sha256": "2e2f55dc3b6271b033058144aaa68b5968eff25acbcaa6fa113b1aebd3d21893",
-      "size": 6190
+      "sha256": "c2361760a49c3ebbf3d20f5b94cd066e95618dea4aa05cbba328c3d7f2123675",
+      "size": 11458
     }
   ],
   "inventory_scope": "allowlisted source files; generated manifests excluded",
   "license": "Apache-2.0",
   "release_version": "0.1.0",
   "schema_version": 1,
-  "snapshot_sha256": "c2076bef6ec5263bfd6566f1f0832b788be512076f916d05b108f5f0938b526d",
+  "snapshot_sha256": "bec0cf2049a6e0a91423932a4d7e33dc4394ab033b23d6bd32441596e848734c",
   "source_release": {
     "repository": "https://github.com/perceptron-ai-inc/mharmony",
     "source_archive": "https://github.com/perceptron-ai-inc/mharmony/archive/refs/tags/v0.1.0.tar.gz",
